@@ -104,20 +104,3 @@ Sequential mode uses the same code path with a concurrency limit of one. This pr
 
 Workers do not touch widgets. Their mutable work is local to `FileAnalyzer::analyzeFile()`. The only intentionally shared state is a `std::atomic_bool` cancellation flag. `Cancel` sets it, stops further scheduling, marks untouched rows cancelled, and active workers check it before and during count loops. Worker results are passed by value in queued Qt signals. During shutdown, the window requests cancellation and waits for its owned pool to finish, avoiding worker access to a destroyed window.
 
-## Benchmarking and Limits
-
-Elapsed wall-clock time comes from `std::chrono::steady_clock`. Speedup is `sequential_ms / parallel_ms` and is shown only after completed sequential and parallel runs have the same file-path list and keyword. A speedup value is a measurement for that run, not a promise. Storage type, OS caching, file sizes, file count, CPU cores, encoding conversion, and other running programs all influence it. Parallel work may be slower for a small number of files or an I/O-bound disk.
-
-Known limitations:
-
-- Discovery itself currently runs in the GUI thread, so an extremely large directory tree can briefly delay the UI. File analysis stays asynchronous.
-- Each file is read into memory before counting, which is simple and appropriate for study-sized text files but not ideal for huge files.
-- The application treats configured extensions as text; it does not detect formats or encodings automatically.
-- Benchmark signatures do not detect a file that changes contents between two runs.
-
-## Troubleshooting
-
-- **`Could not find Qt6`**: pass the correct `-DCMAKE_PREFIX_PATH` pointing to the root of the chosen Qt kit, or configure the kit in Qt Creator.
-- **Compiler/linker mismatch**: use the compiler distributed with or compatible with the selected Qt kit. A MinGW Qt kit needs MinGW; an MSVC Qt kit needs the matching Visual Studio environment.
-- **Application does not start outside Qt Creator**: make Qt runtime DLLs discoverable by adding the kit's `bin` directory to `PATH`, or run `windeployqt` on the built executable.
-- **No files found**: check extensions are comma-separated and include the intended text formats.
