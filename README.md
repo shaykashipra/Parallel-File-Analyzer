@@ -16,12 +16,7 @@ The project is intentionally compact and study-friendly. It demonstrates a respo
 
 ## Screenshots
 
-No screenshots are invented for this repository. After building the program, capture the main window with a discovered-file list and completed results, then add image files under `docs/screenshots/` and reference them here, for example:
-
-```md
-![Completed analysis](docs/screenshots/completed-analysis.png)
-```
-
+![alt text](image.png)
 ## Counting Rules
 
 - Files are read as UTF-8. Invalid byte sequences are replaced by Qt with U+FFFD (replacement character), so the application remains safe rather than claiming the file was perfectly valid text.
