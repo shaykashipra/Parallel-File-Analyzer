@@ -1,0 +1,19 @@
+# CMake build output
+build/
+build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+
+# Qt Creator user settings
+*.user
+*.user.*
+
+# Compiler output
+*.o
+*.obj
+*.exe
+*.pdb
+*.dll
